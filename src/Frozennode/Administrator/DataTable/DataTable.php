@@ -120,7 +120,8 @@ class DataTable {
 
 		//get the Illuminate\Database\Query\Builder instance and set up the count query
 		$dbQuery = $query->getQuery();
-		$countQuery = $dbQuery->getConnection()->table($table)->groupBy($table . '.' . $keyName);
+		// $countQuery = $dbQuery->getConnection()->table($table)->groupBy($table . '.' . $keyName);
+		$countQuery = $dbQuery->getConnection()->table($table);
 
 		//run the supplied query filter for both queries if it was provided
 		$this->config->runQueryFilter($dbQuery);
