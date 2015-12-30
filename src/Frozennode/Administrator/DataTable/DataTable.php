@@ -198,7 +198,8 @@ class DataTable {
 		$model = $this->config->getDataModel();
 
 		//then wrap the inner table and perform the count
-		$sql = "SELECT COUNT({$model->getKeyName()}) AS aggregate FROM ({$querySql}) AS agg";
+		//$sql = "SELECT COUNT({$model->getKeyName()}) AS aggregate FROM ({$querySql}) AS agg";
+    		$sql = preg_replace('/select (.*?) from/', 'select count(*) AS aggregate FROM', $querySql);
 
 		//then perform the count query
 		$results = $countQuery->getConnection()->select($sql, $queryBindings);
