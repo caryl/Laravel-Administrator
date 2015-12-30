@@ -1,5 +1,5 @@
 {
-	"name": "frozennode/administrator",
+	"name": "fork/administrator",
 	"description": "A database interface package for Laravel",
 	"homepage": "http://administrator.frozennode.com",
 	"keywords": ["administrator", "admin", "database", "laravel-administrator", "laravel", "cms"],
@@ -36,5 +36,9 @@
 			"if [ -d \"vendor/ckeditor/\" ] \nthen \nrm -R vendor/ckeditor/ \nfi"
 		]
 	},
-	"minimum-stability": "dev"
+	"extra": {
+	        "branch-alias": {
+	            "dev-master": "master"
+	        }
+	}
 }
