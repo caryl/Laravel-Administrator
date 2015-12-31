@@ -97,8 +97,9 @@ View::composer(array('administrator::layouts.default'), function($view)
 		$view->js += array(
 			'select2' => asset('packages/frozennode/administrator/js/jquery/select2/select2.js'),
 			'jquery-ui-timepicker' => asset('packages/frozennode/administrator/js/jquery/jquery-ui-timepicker-addon.js'),
-			'ckeditor' => asset('packages/frozennode/administrator/js/ckeditor/ckeditor.js'),
-			'ckeditor-jquery' => asset('packages/frozennode/administrator/js/ckeditor/adapters/jquery.js'),
+			'kindeditor' => asset('packages/frozennode/administrator/js/kindeditor/kindeditor-min.js'),
+			//'ckeditor' => asset('packages/frozennode/administrator/js/ckeditor/ckeditor.js'),
+			//'ckeditor-jquery' => asset('packages/frozennode/administrator/js/ckeditor/adapters/jquery.js'),
 			'markdown' => asset('packages/frozennode/administrator/js/markdown.js'),
 			'plupload' => asset('packages/frozennode/administrator/js/plupload/js/plupload.full.js'),
 		);

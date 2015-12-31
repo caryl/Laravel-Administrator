@@ -31,7 +31,7 @@
 	},
 	"scripts": {
 		"post-update-cmd": [
-			"if [ -d \"public/js/ckeditor/\" ] \nthen \nrm -R public/js/ckeditor/ \nfi ",
+			"if [ -d \"public/js/kindeditor/\" ] \nthen \nrm -R public/js/ckeditor/ \nfi ",
 			"if [ -d \"vendor/ckeditor/ckeditor/\" ] \nthen \nmv vendor/ckeditor/ckeditor/ public/js/  \nfi",
 			"if [ -d \"vendor/ckeditor/\" ] \nthen \nrm -R vendor/ckeditor/ \nfi"
 		]
