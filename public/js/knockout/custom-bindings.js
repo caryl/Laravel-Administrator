@@ -539,7 +539,11 @@
 	ko.bindingHandlers.wysiwyg = {
 		init: function (element, valueAccessor, allBindingsAccessor, context)
 		{
-      if(document.readyState!='complete'){return}
+
+      console.debug('in init')
+			setTimeout(function(){
+
+      if(document.readyState!='complete'){ console.debug('return init'); return}
 			var options = valueAccessor(),
 				value = ko.utils.unwrapObservable(options.value),
 				$element = $(element),
@@ -553,83 +557,26 @@
 				editor = editors[options.id];
 			else
 			{
-        editor = KindEditor.create(element, {
-          allowFileManager: false,
-          allowMediaUpload: false,
-          allowFlashUpload: false,
-          height: 300,
-          width: '',
-          items: [ 'undo', 'redo', '|', 'preview',  '|', 'fullscreen', 'source', 'removeformat', 'quickformat', '|', 'fontname', 'fontsize', '|', 'forecolor', 'bold', 'italic', 'underline',
-            '|', 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist',
-            'insertunorderedlist', '|', 'image', 'multiimage', 'insertfile', 'media', 'link'],
-          pasteType: 1,
-          htmlTags: {
-            font : ['color', 'size', 'face', '.background-color'],
-            span : [
-              '.color', '.background-color', '.font-size', '.font-family', '.background',
-              '.font-weight', '.font-style', '.text-decoration', '.vertical-align', '.line-height'
-            ],
-            div : [
-              'align', '.border', '.margin', '.padding', '.text-align', '.color',
-              '.background-color', '.font-size', '.font-family', '.font-weight', '.background',
-              '.font-style', '.text-decoration', '.vertical-align', '.margin-left'
-            ],
-            table: [
-              'border', 'cellspacing', 'cellpadding', 'width', 'height', 'align', 'bordercolor',
-              '.padding', '.margin', '.border', 'bgcolor', '.text-align', '.color', '.background-color',
-              '.font-size', '.font-family', '.font-weight', '.font-style', '.text-decoration', '.background',
-              '.width', '.height', '.border-collapse'
-            ],
-            'td,th': [
-              'align', 'valign', 'width', 'height', 'colspan', 'rowspan', 'bgcolor',
-              '.text-align', '.color', '.background-color', '.font-size', '.font-family', '.font-weight',
-              '.font-style', '.text-decoration', '.vertical-align', '.background', '.border'
-            ],
-            a : ['href', 'target', 'name'],
-            embed : ['src', 'width', 'height', 'type', 'loop', 'autostart', 'quality', '.width', '.height', 'align', 'allowscriptaccess'],
-            img : ['src', 'width', 'height', 'border', 'alt', 'title', 'align', '.width', '.height', '.border'],
-            'p,ol,ul,li,blockquote,h1,h2,h3,h4,h5,h6' : [
-              'align', '.text-align', '.color', '.background-color', '.font-size', '.font-family', '.background',
-              '.font-weight', '.font-style', '.text-decoration', '.vertical-align', '.text-indent', '.margin-left'
-            ],
-            pre : ['class'],
-            hr : ['class', '.page-break-after'],
-            'br,tbody,tr,strong,b,sub,sup,em,i,u,strike,s,del' : []
-          }
-        });
-        editors[options.id] = editor;
-
-				//$element.ckeditor({
-				//	language : language,
-				//	readOnly : !adminData.edit_fields[context.field_name].editable
-				//});
-
-				//editor = $element.ckeditorGet();
+          editor = KindEditor.create($element, {
+            allowFileManager: false,
+            allowMediaUpload: false,
+            allowFlashUpload: false,
+            height: 300,
+            width: '95%',
+            items: [ 'undo', '|', 'fullscreen', 'source', 'removeformat', 'quickformat', '|', 'fontname', 'fontsize', '|', 'forecolor', 'bold',
+              '|', 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist',
+              'insertunorderedlist', '|', 'image', 'multiimage', 'insertfile', 'media', 'link'],
+            pasteType: 2
+          });
+          editors[options.id] = editor;
 			}
 
-			////when the editor is loaded, we want to resize our page
-			//editor.on('loaded', function()
-			//{
-			//	setTimeout(function()
-			//	{
-			//		window.admin.resizePage();
-			//	}, 50);
-
-			//	editor.on('resize', function()
-			//	{
-			//		window.admin.resizePage();
-			//	});
-			//});
-
-			////wire up the blur event to ensure our observable is properly updated
 			editor.afterBlur = function()
 			{
 				var observable = valueAccessor().value,
 			  $el = $('#' + options.id);
-
 				//set the blur attribute to true so we know now to set the editor data in the update method
 				$el.data('blur', true);
-
 				//observable($el.val());
 				observable(this.html());
 			}
@@ -644,9 +591,14 @@
 					delete editors[options.id];
 				}
 			});
+      }.bind(this), 600);
+
+			////wire up the blur event to ensure our observable is properly updated
 		},
 		update: function (element, valueAccessor, allBindingsAccessor, context)
 		{
+      return
+      console.debug('in update');
 			//handle programmatic updates to the observable
 			var options = valueAccessor(),
 				value = ko.utils.unwrapObservable(options.value),
@@ -655,7 +607,7 @@
 
 			value = value ? value : '';
 
-      if(!editor){return}
+      if(!editor){console.debug('return update');return}
 			//if there isn't a value, set the value immediately
 			if (!value)
 			{
